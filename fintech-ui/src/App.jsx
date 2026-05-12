@@ -46,15 +46,423 @@ function DField({ label, value, setter, type = "text", placeholder = "" }) {
   );
 }
 
+// ── NAV PAGE MODAL ────────────────────────────────────────────────────────────
+function NavModal({ page, onClose }) {
+  const content = {
+    Home: {
+      title: "Welcome to GigSecure",
+      subtitle: "Insurance built for the gig economy",
+      body: (
+        <div>
+          <div style={{ background: `linear-gradient(135deg, ${C.dark}, #2d1b6e)`, borderRadius: 14, padding: 32, marginBottom: 24, color: C.white }}>
+            <div style={{ fontSize: 40, marginBottom: 12 }}>🛡️</div>
+            <h3 style={{ fontSize: 22, fontWeight: 900, marginBottom: 10 }}>What is GigSecure?</h3>
+            <p style={{ color: "#bbb", lineHeight: 1.7, fontSize: 14 }}>
+              GigSecure is India's first micro-insurance platform built exclusively for gig workers — delivery partners, cab drivers, freelancers, and daily wage earners. We offer affordable, flexible insurance plans starting from just ₹99/month.
+            </p>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 24 }}>
+            {[
+              { icon: "⚡", title: "Instant Coverage", desc: "Get covered in under 2 minutes with zero paperwork" },
+              { icon: "💰", title: "₹99/month", desc: "Micro-plans designed to fit gig worker budgets" },
+              { icon: "📱", title: "Digital First", desc: "Manage everything from your phone, anytime" },
+              { icon: "🤝", title: "Fast Claims", desc: "AI-powered claims processing in 24–48 hours" },
+            ].map((f, i) => (
+              <div key={i} style={{ background: C.lavender, borderRadius: 12, padding: 18 }}>
+                <div style={{ fontSize: 24, marginBottom: 8 }}>{f.icon}</div>
+                <div style={{ fontWeight: 800, fontSize: 14, marginBottom: 4 }}>{f.title}</div>
+                <div style={{ color: C.textMuted, fontSize: 12, lineHeight: 1.5 }}>{f.desc}</div>
+              </div>
+            ))}
+          </div>
+          <div style={{ background: C.purple + "11", border: `1px solid ${C.purple}33`, borderRadius: 12, padding: 20 }}>
+            <div style={{ fontWeight: 800, fontSize: 15, marginBottom: 8, color: C.purple }}>📊 By the Numbers</div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12 }}>
+              {[["50,000+", "Gig Workers Protected"], ["₹2Cr+", "Claims Settled"], ["4.8★", "App Rating"]].map(([v, l]) => (
+                <div key={l} style={{ textAlign: "center" }}>
+                  <div style={{ fontWeight: 900, fontSize: 20, color: C.purple }}>{v}</div>
+                  <div style={{ fontSize: 11, color: C.textMuted }}>{l}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )
+    },
+    About: {
+      title: "About GigSecure",
+      subtitle: "Our mission, story & team",
+      body: (
+        <div>
+          <div style={{ background: `linear-gradient(135deg, ${C.dark}, #2d1b6e)`, borderRadius: 14, padding: 32, marginBottom: 24, color: C.white }}>
+            <h3 style={{ fontSize: 22, fontWeight: 900, marginBottom: 12 }}>Our Story</h3>
+            <p style={{ color: "#bbb", lineHeight: 1.8, fontSize: 14, marginBottom: 16 }}>
+              Founded in 2024 by the Neural Nexas team in Hyderabad, GigSecure was born from a simple observation: millions of gig workers in India risk their livelihoods every day without any financial safety net.
+            </p>
+            <p style={{ color: "#bbb", lineHeight: 1.8, fontSize: 14 }}>
+              We built a platform that treats gig workers as first-class citizens — not afterthoughts — with insurance products designed around their real lives and real incomes.
+            </p>
+          </div>
+          <div style={{ marginBottom: 24 }}>
+            <div style={{ fontWeight: 800, fontSize: 16, marginBottom: 16 }}>Our Core Values</div>
+            {[
+              { icon: "🎯", title: "Accessibility", desc: "Insurance should be for everyone, not just the salaried class. We price plans at ₹99–₹299/month so any gig worker can afford protection." },
+              { icon: "🔍", title: "Transparency", desc: "No hidden clauses. No fine print traps. Every policy is written in plain language so you know exactly what you're covered for." },
+              { icon: "🚀", title: "Innovation", desc: "We use AI for smart plan recommendations and faster claim processing — technology that works for the worker, not against them." },
+            ].map((v, i) => (
+              <div key={i} style={{ display: "flex", gap: 16, marginBottom: 18, padding: 18, background: C.lavender, borderRadius: 12 }}>
+                <div style={{ fontSize: 28, flexShrink: 0 }}>{v.icon}</div>
+                <div>
+                  <div style={{ fontWeight: 800, fontSize: 14, marginBottom: 4 }}>{v.title}</div>
+                  <div style={{ color: C.textMuted, fontSize: 13, lineHeight: 1.6 }}>{v.desc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div style={{ background: C.purple + "11", border: `1px solid ${C.purple}33`, borderRadius: 12, padding: 20 }}>
+            <div style={{ fontWeight: 800, fontSize: 14, marginBottom: 10, color: C.purple }}>🏆 Built by Neural Nexas Team</div>
+            <p style={{ color: C.textMuted, fontSize: 13, lineHeight: 1.6 }}>A passionate group of engineers, designers, and insurance experts based in Hyderabad, Telangana — dedicated to financial inclusion for India's gig workforce.</p>
+          </div>
+        </div>
+      )
+    },
+    Services: {
+      title: "Our Services",
+      subtitle: "Micro-insurance plans made for gig workers",
+      body: (
+        <div>
+          <p style={{ color: C.textMuted, fontSize: 14, lineHeight: 1.7, marginBottom: 24 }}>
+            GigSecure offers four tailored insurance plan types, each designed to address the unique risks that gig workers face every day. Mix and match to build your perfect coverage.
+          </p>
+          {[
+            { icon: "🛡️", num: "01", name: "Accident Protection Plans", color: "#e53e3e", coverage: "₹50,000", premium: "₹99/mo", desc: "Comprehensive accident coverage specifically designed for gig workers. Covers road accidents, workplace injuries, and disability. No medical history required. Instant policy issuance.", features: ["Road accident coverage", "Workplace injury protection", "Temporary disability benefit", "Ambulance cost reimbursement"] },
+            { icon: "🏥", num: "02", name: "Health Coverage Options", color: "#3182ce", coverage: "₹1,00,000", premium: "₹199/mo", desc: "Affordable health insurance covering hospitalization, surgeries, and outpatient treatment. Includes a wide network of cashless hospitals across India.", features: ["Cashless hospitalization", "Pre & post hospitalization cover", "Day care procedures", "Free annual health check-up"] },
+            { icon: "❤️", num: "03", name: "Life Secure Plans", color: C.purple, coverage: "₹5,00,000", premium: "₹299/mo", desc: "Term life insurance with high coverage at low premiums. Secure your family's financial future even on a gig worker's income.", features: ["Term life coverage", "Accidental death benefit", "Nominee claim within 48 hours", "No medical tests up to ₹5L"] },
+            { icon: "💼", num: "04", name: "Income Protection Plans", color: "#b7791f", coverage: "₹2,00,000", premium: "₹149/mo", desc: "If illness or injury stops you from working, we replace your income so you can focus on recovery without financial stress.", features: ["Monthly income replacement", "Job loss due to injury covered", "Up to 12 months benefit period", "Covers freelance & gig income"] },
+          ].map((s, i) => (
+            <div key={i} style={{ borderRadius: 14, border: `1px solid ${C.border}`, overflow: "hidden", marginBottom: 20 }}>
+              <div style={{ background: C.dark, padding: "20px 24px", display: "flex", alignItems: "center", gap: 16 }}>
+                <div style={{ fontSize: 28 }}>{s.icon}</div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ color: "#ffffff55", fontSize: 13, fontWeight: 700 }}>{s.num}.</div>
+                  <div style={{ color: C.white, fontWeight: 800, fontSize: 16 }}>{s.name}</div>
+                </div>
+                <div style={{ textAlign: "right" }}>
+                  <div style={{ color: "#aaa", fontSize: 11 }}>from</div>
+                  <div style={{ color: s.color, fontWeight: 900, fontSize: 18 }}>{s.premium}</div>
+                </div>
+              </div>
+              <div style={{ padding: "20px 24px", background: C.white }}>
+                <p style={{ color: C.textMuted, fontSize: 13, lineHeight: 1.6, marginBottom: 14 }}>{s.desc}</p>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
+                  {s.features.map((f, fi) => (
+                    <div key={fi} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: C.text }}>
+                      <span style={{ color: C.purple, fontWeight: 900 }}>✓</span> {f}
+                    </div>
+                  ))}
+                </div>
+                <div style={{ marginTop: 14, padding: "10px 16px", background: C.lavender, borderRadius: 8, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span style={{ fontSize: 12, color: C.textMuted }}>Coverage up to</span>
+                  <span style={{ fontWeight: 900, color: C.purple, fontSize: 16 }}>{s.coverage}</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )
+    },
+    Blog: {
+      title: "GigSecure Blog",
+      subtitle: "Insights, tips & updates for gig workers",
+      body: (
+        <div>
+          {[
+            { date: "May 12, 2026", tag: "GUIDE", title: "Crafting Captivating Coverage: What Every Gig Worker Must Know About Insurance", excerpt: "The gig economy is booming in India — but are gig workers protected? This comprehensive guide covers everything from choosing the right plan to filing your first claim quickly and without hassle.", readTime: "5 min read", img: "🚗" },
+            { date: "May 8, 2026", tag: "NEWS", title: "The Art of Drawing Readers In: GigSecure Expands to 50 New Cities", excerpt: "GigSecure is now available to gig workers across Tier-2 and Tier-3 cities in India. Find out what this means for delivery partners and freelancers outside the metros.", readTime: "3 min read", img: "🏙️" },
+            { date: "May 1, 2026", tag: "TIP", title: "Mastering the First Impression: How to Choose Your First Insurance Plan", excerpt: "Buying insurance for the first time can feel overwhelming. We break it down into simple steps so you can get covered confidently, without overspending.", readTime: "4 min read", img: "💡" },
+            { date: "Apr 22, 2026", tag: "STORY", title: "How One Delivery Partner Used GigSecure to Recover After an Accident", excerpt: "Rajesh, a Zomato delivery partner from Pune, shares how a ₹99/month Basic Shield plan covered his hospitalization and helped him get back on the road.", readTime: "6 min read", img: "⭐" },
+          ].map((post, i) => (
+            <div key={i} style={{ background: C.white, borderRadius: 14, border: `1px solid ${C.border}`, overflow: "hidden", marginBottom: 18 }}>
+              <div style={{ background: `linear-gradient(135deg, ${C.dark}, #2d1b6e)`, padding: "24px", display: "flex", alignItems: "center", gap: 16 }}>
+                <div style={{ fontSize: 36 }}>{post.img}</div>
+                <div>
+                  <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 6 }}>
+                    <span style={{ background: C.purple, color: C.white, fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 4, letterSpacing: 1 }}>{post.tag}</span>
+                    <span style={{ color: "#888", fontSize: 11 }}>{post.date}</span>
+                  </div>
+                  <div style={{ color: C.white, fontWeight: 800, fontSize: 15, lineHeight: 1.3 }}>{post.title}</div>
+                </div>
+              </div>
+              <div style={{ padding: "16px 24px" }}>
+                <p style={{ color: C.textMuted, fontSize: 13, lineHeight: 1.6, marginBottom: 12 }}>{post.excerpt}</p>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span style={{ color: C.textLight, fontSize: 11 }}>⏱ {post.readTime}</span>
+                  <span style={{ color: C.purple, fontSize: 12, fontWeight: 700, cursor: "pointer" }}>READ MORE →</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )
+    },
+    Contact: {
+      title: "Contact Us",
+      subtitle: "Get in touch with GigSecure for support",
+      body: (
+        <div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 24 }}>
+            {[
+              { num: "01", label: "Address", value: "Hyderabad, Telangana, India", icon: "📍" },
+              { num: "02", label: "Call Us", value: "202-555-0188", icon: "📞" },
+              { num: "03", label: "Email", value: "contact@gigsecure.in", icon: "✉️" },
+              { num: "04", label: "Social Media", value: "Facebook · Twitter · Instagram · LinkedIn", icon: "🌐" },
+            ].map((c, i) => (
+              <div key={i} style={{ background: C.lavender, borderRadius: 12, padding: 18 }}>
+                <div style={{ color: C.purple, fontSize: 11, fontWeight: 700, letterSpacing: 2, marginBottom: 6 }}>{c.num}</div>
+                <div style={{ fontSize: 20, marginBottom: 6 }}>{c.icon}</div>
+                <div style={{ fontWeight: 800, fontSize: 14, marginBottom: 4 }}>{c.label}</div>
+                <div style={{ color: C.textMuted, fontSize: 12 }}>{c.value}</div>
+              </div>
+            ))}
+          </div>
+          <div style={{ background: C.white, borderRadius: 14, border: `1px solid ${C.border}`, padding: 24 }}>
+            <div style={{ fontWeight: 800, fontSize: 16, marginBottom: 4 }}>Reach Out</div>
+            <p style={{ color: C.textMuted, fontSize: 13, marginBottom: 20 }}>We're here to help you with any questions or concerns regarding our micro-insurance solutions.</p>
+            {[["First Name", "text"], ["Last Name", "text"], ["Email", "email"]].map(([lbl, tp]) => (
+              <div key={lbl} style={{ marginBottom: 14 }}>
+                <label style={{ color: C.textMuted, fontSize: 12, fontWeight: 600, display: "block", marginBottom: 6 }}>{lbl} <span style={{ color: "red" }}>*</span></label>
+                <input type={tp} placeholder={lbl} style={{ width: "100%", padding: "11px 14px", borderRadius: 8, background: C.inputBg, border: `1px solid ${C.border}`, color: C.text, fontSize: 14, outline: "none", boxSizing: "border-box", fontFamily: "inherit" }} />
+              </div>
+            ))}
+            <div style={{ marginBottom: 14 }}>
+              <label style={{ color: C.textMuted, fontSize: 12, fontWeight: 600, display: "block", marginBottom: 6 }}>Message</label>
+              <textarea placeholder="Your message..." rows={4} style={{ width: "100%", padding: "11px 14px", borderRadius: 8, background: C.inputBg, border: `1px solid ${C.border}`, color: C.text, fontSize: 14, outline: "none", boxSizing: "border-box", fontFamily: "inherit", resize: "vertical" }} />
+            </div>
+            <PurpleBtn style={{ width: "100%", padding: "13px", fontSize: 14, borderRadius: 8 }}>SUBMIT →</PurpleBtn>
+          </div>
+        </div>
+      )
+    }
+  };
+
+  const c = content[page];
+  if (!c) return null;
+
+  return (
+    <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.6)", zIndex: 999, display: "flex", alignItems: "flex-start", justifyContent: "center", overflowY: "auto", padding: "40px 20px" }} onClick={onClose}>
+      <div style={{ background: C.white, borderRadius: 18, width: "100%", maxWidth: 640, boxShadow: "0 24px 80px rgba(0,0,0,0.3)", overflow: "hidden" }} onClick={e => e.stopPropagation()}>
+        {/* Header */}
+        <div style={{ background: `linear-gradient(135deg, ${C.dark} 0%, #2d1b6e 100%)`, padding: "28px 32px", position: "relative" }}>
+          <button onClick={onClose} style={{ position: "absolute", top: 16, right: 16, background: "rgba(255,255,255,0.1)", border: "none", color: C.white, width: 32, height: 32, borderRadius: 8, fontSize: 18, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>×</button>
+          <div style={{ color: C.purple, fontSize: 11, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase", marginBottom: 6 }}>GigSecure Portal</div>
+          <h2 style={{ color: C.white, fontSize: 26, fontWeight: 900, margin: "0 0 4px" }}>{c.title}</h2>
+          <p style={{ color: "#aaa", fontSize: 13 }}>{c.subtitle}</p>
+        </div>
+        {/* Body */}
+        <div style={{ padding: "28px 32px", maxHeight: "65vh", overflowY: "auto" }}>
+          {c.body}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── BUY PLAN MODAL ────────────────────────────────────────────────────────────
+function BuyPlanModal({ plan, onClose, onPaid }) {
+  const [step, setStep] = useState("confirm"); // confirm | payment | success
+  const [payMethod, setPayMethod] = useState("upi");
+  const [upiId, setUpiId] = useState("");
+  const [cardNum, setCardNum] = useState("");
+  const [cardName, setCardName] = useState("");
+  const [cardExpiry, setCardExpiry] = useState("");
+  const [cardCvv, setCardCvv] = useState("");
+  const [processing, setProcessing] = useState(false);
+
+  const handlePay = () => {
+    setProcessing(true);
+    setTimeout(() => {
+      setProcessing(false);
+      setStep("success");
+      if (onPaid) onPaid(plan);
+    }, 2000);
+  };
+
+  if (step === "success") return (
+    <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.6)", zIndex: 1000, display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }} onClick={onClose}>
+      <div style={{ background: C.white, borderRadius: 18, width: "100%", maxWidth: 440, padding: 48, textAlign: "center", boxShadow: "0 24px 80px rgba(0,0,0,0.3)" }} onClick={e => e.stopPropagation()}>
+        <div style={{ width: 80, height: 80, background: "#00C89622", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 40, margin: "0 auto 20px" }}>✅</div>
+        <h2 style={{ fontWeight: 900, fontSize: 26, color: "#00A876", marginBottom: 8 }}>Payment Successful!</h2>
+        <p style={{ color: C.textMuted, fontSize: 14, lineHeight: 1.6, marginBottom: 20 }}>
+          Your <strong style={{ color: C.text }}>{plan.name}</strong> policy is now active.<br />You are covered starting today!
+        </p>
+        <div style={{ background: C.lavender, borderRadius: 12, padding: 20, marginBottom: 24 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, textAlign: "left" }}>
+            {[
+              ["Plan", plan.name],
+              ["Type", plan.type],
+              ["Coverage", plan.coverage],
+              ["Premium", plan.premium],
+              ["Policy ID", `POL-${Date.now().toString().slice(-6)}`],
+              ["Status", "✅ Active"],
+            ].map(([k, v]) => (
+              <div key={k}>
+                <div style={{ color: C.textLight, fontSize: 10, textTransform: "uppercase", letterSpacing: 1, marginBottom: 2 }}>{k}</div>
+                <div style={{ fontWeight: 700, fontSize: 13, color: k === "Status" ? "#00A876" : C.text }}>{v}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <PurpleBtn onClick={onClose} style={{ width: "100%", padding: "13px", fontSize: 14, borderRadius: 8 }}>CLOSE</PurpleBtn>
+      </div>
+    </div>
+  );
+
+  return (
+    <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.6)", zIndex: 1000, display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }} onClick={onClose}>
+      <div style={{ background: C.white, borderRadius: 18, width: "100%", maxWidth: 460, boxShadow: "0 24px 80px rgba(0,0,0,0.3)", overflow: "hidden" }} onClick={e => e.stopPropagation()}>
+        {/* Modal Header */}
+        <div style={{ background: `linear-gradient(135deg, ${C.dark}, #2d1b6e)`, padding: "24px 28px", display: "flex", alignItems: "center", gap: 14 }}>
+          <div style={{ fontSize: 32 }}>{plan.icon}</div>
+          <div style={{ flex: 1 }}>
+            <div style={{ color: "#aaa", fontSize: 11, letterSpacing: 2, textTransform: "uppercase" }}>{step === "confirm" ? "Confirm Purchase" : "Payment"}</div>
+            <div style={{ color: C.white, fontWeight: 900, fontSize: 18 }}>{plan.name}</div>
+          </div>
+          <button onClick={onClose} style={{ background: "rgba(255,255,255,0.1)", border: "none", color: C.white, width: 32, height: 32, borderRadius: 8, fontSize: 18, cursor: "pointer" }}>×</button>
+        </div>
+
+        <div style={{ padding: 28 }}>
+          {step === "confirm" && (
+            <>
+              {/* Plan Summary */}
+              <div style={{ background: C.lavender, borderRadius: 12, padding: 20, marginBottom: 20 }}>
+                <div style={{ fontWeight: 800, fontSize: 14, marginBottom: 12 }}>Plan Summary</div>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+                  {[
+                    ["Plan Type", plan.type],
+                    ["Coverage", plan.coverage],
+                    ["Monthly Premium", plan.premium],
+                    ["Start Date", "Today"],
+                  ].map(([k, v]) => (
+                    <div key={k}>
+                      <div style={{ color: C.textLight, fontSize: 10, textTransform: "uppercase", letterSpacing: 1, marginBottom: 2 }}>{k}</div>
+                      <div style={{ fontWeight: 700, fontSize: 13 }}>{v}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div style={{ background: C.purple + "11", border: `1px solid ${C.purple}33`, borderRadius: 10, padding: 14, marginBottom: 24, fontSize: 12, color: C.textMuted, lineHeight: 1.6 }}>
+                ℹ️ By purchasing this plan, you agree to GigSecure's terms and conditions. Coverage starts immediately upon successful payment.
+              </div>
+
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+                <PurpleBtn outline onClick={onClose} style={{ width: "100%", padding: "13px", fontSize: 13, borderRadius: 8 }}>CANCEL</PurpleBtn>
+                <PurpleBtn onClick={() => setStep("payment")} style={{ width: "100%", padding: "13px", fontSize: 13, borderRadius: 8 }}>BUY NOW →</PurpleBtn>
+              </div>
+            </>
+          )}
+
+          {step === "payment" && (
+            <>
+              <div style={{ fontWeight: 800, fontSize: 16, marginBottom: 16 }}>Choose Payment Method</div>
+              {/* Payment method tabs */}
+              <div style={{ display: "flex", gap: 8, marginBottom: 20 }}>
+                {[["upi", "📲 UPI"], ["card", "💳 Card"], ["netbanking", "🏦 Net Banking"]].map(([id, label]) => (
+                  <button key={id} onClick={() => setPayMethod(id)} style={{
+                    flex: 1, padding: "10px 6px", borderRadius: 8, border: `2px solid ${payMethod === id ? C.purple : C.border}`,
+                    background: payMethod === id ? C.purple + "11" : C.white, color: payMethod === id ? C.purple : C.textMuted,
+                    fontWeight: 700, fontSize: 11, cursor: "pointer", fontFamily: "inherit"
+                  }}>{label}</button>
+                ))}
+              </div>
+
+              {payMethod === "upi" && (
+                <div style={{ marginBottom: 20 }}>
+                  <label style={{ color: C.textMuted, fontSize: 12, fontWeight: 600, display: "block", marginBottom: 8 }}>UPI ID</label>
+                  <input value={upiId} onChange={e => setUpiId(e.target.value)} placeholder="yourname@upi"
+                    style={{ width: "100%", padding: "12px 14px", borderRadius: 8, background: C.inputBg, border: `1px solid ${C.border}`, color: C.text, fontSize: 14, outline: "none", boxSizing: "border-box", fontFamily: "inherit" }} />
+                  <div style={{ marginTop: 12, display: "flex", gap: 8, flexWrap: "wrap" }}>
+                    {["@okaxis", "@paytm", "@ybl", "@oksbi"].map(suffix => (
+                      <span key={suffix} onClick={() => setUpiId(prev => prev.split("@")[0] + suffix)} style={{ background: C.lavender, color: C.purple, fontSize: 11, fontWeight: 600, padding: "4px 10px", borderRadius: 20, cursor: "pointer" }}>{suffix}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {payMethod === "card" && (
+                <div style={{ marginBottom: 20 }}>
+                  <div style={{ marginBottom: 14 }}>
+                    <label style={{ color: C.textMuted, fontSize: 12, fontWeight: 600, display: "block", marginBottom: 6 }}>Card Number</label>
+                    <input value={cardNum} onChange={e => setCardNum(e.target.value)} placeholder="1234 5678 9012 3456" maxLength={19}
+                      style={{ width: "100%", padding: "12px 14px", borderRadius: 8, background: C.inputBg, border: `1px solid ${C.border}`, color: C.text, fontSize: 14, outline: "none", boxSizing: "border-box", fontFamily: "inherit" }} />
+                  </div>
+                  <div style={{ marginBottom: 14 }}>
+                    <label style={{ color: C.textMuted, fontSize: 12, fontWeight: 600, display: "block", marginBottom: 6 }}>Cardholder Name</label>
+                    <input value={cardName} onChange={e => setCardName(e.target.value)} placeholder="Name on card"
+                      style={{ width: "100%", padding: "12px 14px", borderRadius: 8, background: C.inputBg, border: `1px solid ${C.border}`, color: C.text, fontSize: 14, outline: "none", boxSizing: "border-box", fontFamily: "inherit" }} />
+                  </div>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+                    <div>
+                      <label style={{ color: C.textMuted, fontSize: 12, fontWeight: 600, display: "block", marginBottom: 6 }}>Expiry</label>
+                      <input value={cardExpiry} onChange={e => setCardExpiry(e.target.value)} placeholder="MM/YY" maxLength={5}
+                        style={{ width: "100%", padding: "12px 14px", borderRadius: 8, background: C.inputBg, border: `1px solid ${C.border}`, color: C.text, fontSize: 14, outline: "none", boxSizing: "border-box", fontFamily: "inherit" }} />
+                    </div>
+                    <div>
+                      <label style={{ color: C.textMuted, fontSize: 12, fontWeight: 600, display: "block", marginBottom: 6 }}>CVV</label>
+                      <input value={cardCvv} onChange={e => setCardCvv(e.target.value)} placeholder="•••" maxLength={3} type="password"
+                        style={{ width: "100%", padding: "12px 14px", borderRadius: 8, background: C.inputBg, border: `1px solid ${C.border}`, color: C.text, fontSize: 14, outline: "none", boxSizing: "border-box", fontFamily: "inherit" }} />
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {payMethod === "netbanking" && (
+                <div style={{ marginBottom: 20 }}>
+                  <label style={{ color: C.textMuted, fontSize: 12, fontWeight: 600, display: "block", marginBottom: 10 }}>Select Your Bank</label>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+                    {["SBI", "HDFC", "ICICI", "Axis", "Kotak", "Yes Bank"].map(bank => (
+                      <button key={bank} style={{ padding: "10px", borderRadius: 8, border: `1px solid ${C.border}`, background: C.lavender, color: C.text, fontWeight: 600, fontSize: 12, cursor: "pointer", fontFamily: "inherit" }}>{bank}</button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Amount due */}
+              <div style={{ background: C.lavender, borderRadius: 10, padding: "14px 16px", marginBottom: 20, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <span style={{ fontWeight: 700, fontSize: 14 }}>Amount Due</span>
+                <span style={{ fontWeight: 900, fontSize: 20, color: C.purple }}>{plan.premium}</span>
+              </div>
+
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+                <PurpleBtn outline onClick={() => setStep("confirm")} style={{ width: "100%", padding: "13px", fontSize: 13, borderRadius: 8 }}>← BACK</PurpleBtn>
+                <PurpleBtn onClick={handlePay} style={{ width: "100%", padding: "13px", fontSize: 13, borderRadius: 8, opacity: processing ? 0.7 : 1 }}>
+                  {processing ? "⟳ PROCESSING..." : "PAY NOW →"}
+                </PurpleBtn>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ── LANDING ──────────────────────────────────────────────────────────────────
 function LandingPage({ goLogin }) {
+  const [navModal, setNavModal] = useState(null);
+
   return (
     <div style={{ fontFamily: "'Inter', sans-serif", color: C.text, background: C.white }}>
+      {navModal && <NavModal page={navModal} onClose={() => setNavModal(null)} />}
+
       <nav style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "18px 48px", background: C.dark, position: "sticky", top: 0, zIndex: 100 }}>
         <div style={{ color: C.white, fontWeight: 900, fontSize: 22 }}>GigSecure</div>
         <div style={{ display: "flex", gap: 32 }}>
-          {["Home", "About", "Services", "Contact"].map(n => (
-            <span key={n} style={{ color: "#bbb", fontSize: 13, cursor: "pointer", fontWeight: 500 }}>{n}</span>
+          {["Home", "About", "Services", "Blog", "Contact"].map(n => (
+            <span key={n} onClick={() => setNavModal(n)} style={{ color: "#bbb", fontSize: 13, cursor: "pointer", fontWeight: 500, transition: "color 0.2s" }}
+              onMouseEnter={e => e.target.style.color = C.white}
+              onMouseLeave={e => e.target.style.color = "#bbb"}
+            >{n}</span>
           ))}
         </div>
         <PurpleBtn onClick={goLogin} style={{ padding: "9px 22px", fontSize: 12 }}>Login / Sign Up</PurpleBtn>
@@ -88,7 +496,7 @@ function LandingPage({ goLogin }) {
             and daily wage earners. With a focus on affordability and accessibility, GigSecure provides innovative
             policies that stand out in the market.
           </p>
-          <PurpleBtn outline onClick={() => {}} style={{ padding: "10px 24px", fontSize: 12 }}>LEARN MORE</PurpleBtn>
+          <PurpleBtn outline onClick={() => setNavModal("About")} style={{ padding: "10px 24px", fontSize: 12 }}>LEARN MORE</PurpleBtn>
         </div>
       </div>
 
@@ -104,7 +512,7 @@ function LandingPage({ goLogin }) {
               <div style={{ width: 40, height: 3, background: C.purple, margin: "8px 0 10px" }} />
               <div style={{ fontWeight: 800, fontSize: 17, marginBottom: 6 }}>{plan.icon} {plan.name}</div>
               <div style={{ fontSize: 12, color: "#bbb", marginBottom: 14 }}>Coverage up to {plan.coverage}</div>
-              <span style={{ color: C.purple, fontSize: 12, fontWeight: 700, letterSpacing: 1, cursor: "pointer" }}>LEARN MORE</span>
+              <span onClick={() => setNavModal("Services")} style={{ color: C.purple, fontSize: 12, fontWeight: 700, letterSpacing: 1, cursor: "pointer" }}>LEARN MORE</span>
             </div>
           ))}
         </div>
@@ -358,39 +766,45 @@ function DBHome({ userName }) {
 }
 
 function DBPlans() {
-  const [bought, setBought] = useState(null);
-  if (bought) return (
-    <div style={{ textAlign: "center", paddingTop: 60 }}>
-      <div style={{ fontSize: 56, marginBottom: 16 }}>✅</div>
-      <h2 style={{ fontWeight: 900, fontSize: 24, marginBottom: 8, color: C.purple }}>Plan Purchased!</h2>
-      <p style={{ color: C.textMuted, marginBottom: 24 }}>Your <strong>{bought.name}</strong> policy is now active.</p>
-      <PurpleBtn onClick={() => setBought(null)}>View Other Plans</PurpleBtn>
-    </div>
-  );
+  const [buyModal, setBuyModal] = useState(null);
+  const [paid, setPaid]         = useState([]);
+
   return (
-    <div>
-      <h2 style={{ fontWeight: 900, fontSize: 22, marginBottom: 4 }}>Insurance Plans</h2>
-      <p style={{ color: C.textMuted, fontSize: 13, marginBottom: 28 }}>Affordable plans tailored for gig workers</p>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 18 }}>
-        {plans.map(plan => (
-          <div key={plan.id} style={{ background: C.white, borderRadius: 14, overflow: "hidden", boxShadow: "0 2px 12px rgba(0,0,0,0.08)" }}>
-            <div style={{ background: C.dark, padding: "24px 24px 20px" }}>
-              <div style={{ fontSize: 22, fontWeight: 900, color: "#ffffff44" }}>{plan.num}.</div>
-              <div style={{ width: 40, height: 3, background: C.purple, margin: "8px 0 10px" }} />
-              <div style={{ color: C.white, fontWeight: 800, fontSize: 17 }}>{plan.icon} {plan.name}</div>
-              <div style={{ color: "#aaa", fontSize: 12, marginTop: 4 }}>{plan.type}</div>
-            </div>
-            <div style={{ padding: "20px 24px" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 16 }}>
-                <div><div style={{ color: C.textLight, fontSize: 10, textTransform: "uppercase", letterSpacing: 1 }}>Coverage</div><div style={{ fontWeight: 800, fontSize: 16 }}>{plan.coverage}</div></div>
-                <div style={{ textAlign: "right" }}><div style={{ color: C.textLight, fontSize: 10, textTransform: "uppercase", letterSpacing: 1 }}>Premium</div><div style={{ fontWeight: 800, fontSize: 16, color: C.purple }}>{plan.premium}</div></div>
+    <>
+      {buyModal && (
+        <BuyPlanModal
+          plan={buyModal}
+          onClose={() => setBuyModal(null)}
+          onPaid={plan => { setPaid(p => [...p, plan.id]); }}
+        />
+      )}
+      <div>
+        <h2 style={{ fontWeight: 900, fontSize: 22, marginBottom: 4 }}>Insurance Plans</h2>
+        <p style={{ color: C.textMuted, fontSize: 13, marginBottom: 28 }}>Affordable plans tailored for gig workers</p>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 18 }}>
+          {plans.map(plan => (
+            <div key={plan.id} style={{ background: C.white, borderRadius: 14, overflow: "hidden", boxShadow: "0 2px 12px rgba(0,0,0,0.08)" }}>
+              <div style={{ background: C.dark, padding: "24px 24px 20px" }}>
+                <div style={{ fontSize: 22, fontWeight: 900, color: "#ffffff44" }}>{plan.num}.</div>
+                <div style={{ width: 40, height: 3, background: C.purple, margin: "8px 0 10px" }} />
+                <div style={{ color: C.white, fontWeight: 800, fontSize: 17 }}>{plan.icon} {plan.name}</div>
+                <div style={{ color: "#aaa", fontSize: 12, marginTop: 4 }}>{plan.type}</div>
               </div>
-              <PurpleBtn onClick={() => setBought(plan)} style={{ width: "100%", padding: "11px", fontSize: 13, borderRadius: 8 }}>BUY NOW →</PurpleBtn>
+              <div style={{ padding: "20px 24px" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 16 }}>
+                  <div><div style={{ color: C.textLight, fontSize: 10, textTransform: "uppercase", letterSpacing: 1 }}>Coverage</div><div style={{ fontWeight: 800, fontSize: 16 }}>{plan.coverage}</div></div>
+                  <div style={{ textAlign: "right" }}><div style={{ color: C.textLight, fontSize: 10, textTransform: "uppercase", letterSpacing: 1 }}>Premium</div><div style={{ fontWeight: 800, fontSize: 16, color: C.purple }}>{plan.premium}</div></div>
+                </div>
+                {paid.includes(plan.id)
+                  ? <div style={{ width: "100%", padding: "11px", fontSize: 13, borderRadius: 8, background: "#00C89622", color: "#00A876", fontWeight: 800, textAlign: "center", border: `1px solid #00C89644` }}>✅ Active Plan</div>
+                  : <PurpleBtn onClick={() => setBuyModal(plan)} style={{ width: "100%", padding: "11px", fontSize: 13, borderRadius: 8 }}>BUY NOW →</PurpleBtn>
+                }
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
